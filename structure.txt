@@ -1,0 +1,34 @@
+AI-ATS/
+│
+├── app/
+│   ├── main.py              # FastAPI entry
+│   ├── config.py
+│   ├── database.py
+│
+│   ├── ingestion/
+│   │   ├── resume_parser.py
+│   │   └── jd_parser.py
+│
+│   ├── extraction/
+│   │   ├── resume_extractor.py   # LLaMA JSON extraction
+│   │   └── jd_extractor.py
+│
+│   ├── embeddings/
+│   │   └── embedder.py
+│
+│   ├── matching/
+│   │   ├── scorer.py
+│   │   └── ranker.py
+│
+│   ├── explain/
+│   │   └── explanation.py
+│
+│   └── models/
+│       └── schemas.py
+│
+├── data/
+│   ├── resumes/
+│   ├── job_descriptions/
+│
+├── requirements.txt
+└── README.md
