@@ -38,20 +38,25 @@ def score_candidate(resume: dict, jd: dict):
         jd.get("skills", [])
     )
 
-    experience_score = min(
-        resume.get("years_of_experience", 0) / max(jd.get("min_experience", 1), 1),
-        1.0
-    )
+    resume_exp = resume.get("years_of_experience")
+    jd_exp = jd.get("min_experience")
+
+    # sanitize values
+    resume_exp = resume_exp if isinstance(resume_exp, (int, float)) else 0
+    jd_exp = jd_exp if isinstance(jd_exp, (int, float)) and jd_exp > 0 else 1
+
+    experience_ratio = min(resume_exp / jd_exp, 1.0)
+
 
     final_score = (
         0.6 * semantic_similarity +
         0.3 * skill_result["score"] +
-        0.1 * experience_score
+        0.1 * experience_ratio
     )
 
     return {
         "final_score": round(final_score * 100, 2),
         "semantic_similarity": round(semantic_similarity, 3),
         "skill_match": skill_result,
-        "experience_score": round(experience_score, 2)
+        "experience_score": round(experience_ratio, 2)
     }
